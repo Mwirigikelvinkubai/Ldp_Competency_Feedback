@@ -66,6 +66,13 @@
       justify-content: space-between;
       margin-top: 20px;
     }
+    #thankYou {
+      display: none;
+      text-align: center;
+      font-size: 18px;
+      color: green;
+      margin-top: 30px;
+    }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
@@ -75,10 +82,10 @@
 <body>
   <div class="container">
     <div class="progress" id="progressText">Step 1 of 3</div>
+    
     <form id="wizardForm"
           action="https://docs.google.com/forms/d/e/1FAIpQLSd5pRPtCVdaeTD6-E9rdnAAHXJGerbHPeWsiQCSz6XSGDo_6g/formResponse"
-          method="POST"
-          target="_blank">
+          method="POST">
       
       <!-- STEP 1 -->
       <div id="tab1" class="tab-content active">
@@ -150,11 +157,16 @@
         
         <div class="nav-buttons">
           <button type="button" class="btn back">Back</button>
-          <button type="submit" class="btn">Submit Feedback</button>
+          <button type="button" class="btn" id="submitBtn">Submit Feedback</button>
         </div>
       </div>
       
     </form>
+
+    <!-- Thank You Message -->
+    <div id="thankYou">
+      ✅ Thank you! Your response has been recorded, Baraka.
+    </div>
   </div>
   
   <script>
@@ -162,6 +174,9 @@
     const nextBtns = document.querySelectorAll('.next');
     const backBtns = document.querySelectorAll('.back');
     const progressText = document.getElementById('progressText');
+    const form = document.getElementById('wizardForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const thankYou = document.getElementById('thankYou');
     let current = 0;
     
     function showTab(index) {
@@ -187,6 +202,21 @@
           current--;
           showTab(current);
         }
+      });
+    });
+
+    // AJAX submission to Google Forms
+    submitBtn.addEventListener('click', function() {
+      const formData = new FormData(form);
+      fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        mode: 'no-cors'
+      }).then(() => {
+        form.style.display = 'none';
+        thankYou.style.display = 'block';
+      }).catch(() => {
+        alert("Something went wrong. Please try again.");
       });
     });
   </script>
