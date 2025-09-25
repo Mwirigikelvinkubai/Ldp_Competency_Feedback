@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MOHI Competencies Feedback</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f8fa;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
+      width: 100%;
+      max-width: 700px;
+      background: #fff;
+      margin: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      padding: 20px;
+    }
+    .progress {
+      text-align: right;
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 10px;
+    }
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    label {
+      display: block;
+      margin: 12px 0 6px;
+      font-weight: bold;
+    }
+    input[type="text"], textarea, select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    textarea {
+      min-height: 80px;
+    }
+    .btn {
+      margin-top: 20px;
+      padding: 12px 20px;
+      background: #16316A;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #0f2147;
+    }
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="progress" id="progressText">Step 1 of 3</div>
+    <form id="wizardForm"
+          action="https://docs.google.com/forms/d/e/1FAIpQLSd5pRPtCVdaeTD6-E9rdnAAHXJGerbHPeWsiQCSz6XSGDo_6g/formResponse"
+          method="POST"
+          target="_blank">
+      
+      <!-- STEP 1 -->
+      <div id="tab1" class="tab-content active">
+        <h2>General Info</h2>
+        
+        <label>Email *</label>
+        <input type="text" name="entry.1929371800" required>
+        
+        <label>Center *</label>
+        <select name="entry.937167825" required>
+          <option value="">Choose...</option>
+          <option value="Mabatini High">Mabatini High</option>
+          <option value="Mabatini Primary">Mabatini Primary</option>
+          <option value="Kariobangi">Kariobangi</option>
+          <option value="MTTI">MTTI</option>
+          <option value="Ngei">Ngei</option>
+          <option value="Gitathuru">Gitathuru</option>
+        </select>
+        
+        <div class="nav-buttons">
+          <span></span>
+          <button type="button" class="btn next">Next</button>
+        </div>
+      </div>
+      
+      <!-- STEP 2 -->
+      <div id="tab2" class="tab-content">
+        <h2>Competency Questions</h2>
+        
+        <label>Which competency had the most videos? *</label>
+        <input type="text" name="entry.1089032800" required>
+        
+        <label>Which competency was most impactful to you? Why? *</label>
+        <textarea name="entry.222437525" required></textarea>
+        
+        <label>How many competencies have you done? Mention them *</label>
+        <div>
+          <label><input type="checkbox" name="entry.1544691959" value="Beneficiary Focus"> Beneficiary Focus</label><br>
+          <label><input type="checkbox" name="entry.1544691959" value="Time Management"> Time Management</label><br>
+          <label><input type="checkbox" name="entry.1544691959" value="Personal Finance"> Personal Finance</label><br>
+          <label><input type="checkbox" name="entry.1544691959" value="Active Listening"> Active Listening</label><br>
+          <label><input type="checkbox" name="entry.1544691959" value="Conflict Management"> Conflict Management</label><br>
+          <label><input type="checkbox" name="entry.1544691959" value="Self-Care"> Self-Care</label><br>
+          <label><input type="checkbox" name="entry.1544691959" value="Self-Awareness"> Self-Awareness</label><br>
+          <label><input type="checkbox" name="entry.1544691959" value="Approachability"> Approachability</label>
+        </div>
+        
+        <label>Which assessments have you done? Competency? *</label>
+        <textarea name="entry.1573643529" required></textarea>
+        
+        <label>How many calendars have you created? Which competency? *</label>
+        <textarea name="entry.1780171911" required></textarea>
+        
+        <div class="nav-buttons">
+          <button type="button" class="btn back">Back</button>
+          <button type="button" class="btn next">Next</button>
+        </div>
+      </div>
+      
+      <!-- STEP 3 -->
+      <div id="tab3" class="tab-content">
+        <h2>Feedback & Suggestions</h2>
+        
+        <label>What can be improved on MOHI Competencies</label>
+        <textarea name="entry.464442238"></textarea>
+        
+        <label>What did you like most about this training? *</label>
+        <textarea name="entry.1780171911" required></textarea>
+        
+        <div class="nav-buttons">
+          <button type="button" class="btn back">Back</button>
+          <button type="submit" class="btn">Submit Feedback</button>
+        </div>
+      </div>
+      
+    </form>
+  </div>
+  
+  <script>
+    const tabs = document.querySelectorAll('.tab-content');
+    const nextBtns = document.querySelectorAll('.next');
+    const backBtns = document.querySelectorAll('.back');
+    const progressText = document.getElementById('progressText');
+    let current = 0;
+    
+    function showTab(index) {
+      tabs.forEach((tab, i) => {
+        tab.classList.remove('active');
+        if (i === index) tab.classList.add('active');
+      });
+      progressText.textContent = `Step ${index + 1} of ${tabs.length}`;
+    }
+    
+    nextBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (current < tabs.length - 1) {
+          current++;
+          showTab(current);
+        }
+      });
+    });
+    
+    backBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (current > 0) {
+          current--;
+          showTab(current);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
